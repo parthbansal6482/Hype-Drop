@@ -1,0 +1,202 @@
+{% style %}
+  .cart-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 450px;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    z-index: 1000;
+    transform: translateX(100%);
+    transition: transform var(--transition-duration) var(--transition-curve);
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--color-foreground);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+  }
+
+  .cart-drawer.is-active {
+    transform: translateX(0);
+  }
+
+  .cart-drawer-header {
+    padding: 2rem;
+    border-bottom: 1px solid var(--color-foreground);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .cart-drawer-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .cart-drawer-close {
+    background: transparent;
+    border: none;
+    color: var(--color-foreground);
+    font-size: 1.5rem;
+    padding: 0;
+    cursor: pointer;
+    transition: color var(--transition-duration) var(--transition-curve);
+  }
+
+  .cart-drawer-close:hover {
+    color: var(--color-accent-pink);
+  }
+
+  .cart-drawer-body {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 2rem;
+  }
+
+  .cart-drawer-footer {
+    padding: 2rem;
+    border-top: 1px solid var(--color-foreground);
+    background-color: var(--color-background);
+  }
+
+  .cart-drawer-subtotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .cart-drawer-subtotal span:last-child {
+    color: var(--color-accent-neon);
+  }
+
+  .cart-drawer-checkout {
+    display: block;
+    width: 100%;
+    padding: 1.25rem;
+    text-align: center;
+    background-color: transparent;
+    color: var(--color-accent-neon);
+    border: 2px solid var(--color-accent-neon);
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 1.2rem;
+    box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
+    transition: all var(--transition-duration) var(--transition-curve);
+  }
+
+  .cart-drawer-checkout:hover {
+    background-color: var(--color-accent-neon);
+    color: #08080C;
+    box-shadow: 0 0 20px rgba(0, 255, 102, 0.6);
+  }
+  
+  .cart-drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(8, 8, 12, 0.8);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-duration) var(--transition-curve);
+  }
+  
+  .cart-drawer-overlay.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+{% endstyle %}
+
+<div class="cart-drawer-overlay" id="CartDrawerOverlay"></div>
+<div class="cart-drawer" id="CartDrawer">
+  <div class="cart-drawer-header">
+    <h2 class="cart-drawer-title">YOUR DROP CART</h2>
+    <button type="button" class="cart-drawer-close" id="CartDrawerClose">&times;</button>
+  </div>
+  
+  {% assign free_shipping_threshold = 50000 %}
+  {% assign amount_left = free_shipping_threshold | minus: cart.total_price %}
+  <div class="cart-drawer-shipping-tracker" style="padding: 1rem 2rem; background: #111; border-bottom: 1px solid var(--color-foreground); text-align: center; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em;">
+    {% if amount_left > 0 %}
+      SPEND <span style="color: var(--color-accent-neon); text-shadow: 0 0 5px rgba(0, 255, 102, 0.4);">{{ amount_left | money }}</span> MORE TO UNLOCK FREE SHIPPING
+    {% else %}
+      <span style="color: var(--color-accent-neon); text-shadow: 0 0 5px rgba(0, 255, 102, 0.4);">CONGRATULATIONS! YOU'VE UNLOCKED FREE SHIPPING!</span>
+    {% endif %}
+  </div>
+  
+  <div class="cart-drawer-body" id="CartDrawerBody">
+    {% if cart.item_count > 0 %}
+      {% for item in cart.items %}
+        <!-- Item Markup -->
+        <div style="margin-bottom: 1.5rem; display: flex; gap: 1rem;">
+          <div style="width: 80px; height: 100px; background: #222;">
+            {% if item.image %}
+              <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}" style="width:100%; height:100%; object-fit:cover;">
+            {% endif %}
+          </div>
+          <div>
+            <div style="font-weight: bold; text-transform: uppercase;">{{ item.product.title }}</div>
+            <div style="color: var(--color-accent-neon); margin-top: 0.5rem;">{{ item.final_line_price | money_with_currency }}</div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p style="text-align: center; text-transform: uppercase; font-weight: bold; color: #666; margin-top: 2rem;">Your cart is empty.</p>
+    {% endif %}
+  </div>
+  
+  <div class="cart-drawer-footer">
+    <div class="cart-drawer-subtotal">
+      <span>Subtotal</span>
+      <span>{{ cart.total_price | money_with_currency }}</span>
+    </div>
+    
+    <form action="{{ routes.cart_url }}" method="post" id="CartDrawerForm">
+      <button type="submit" name="checkout" class="cart-drawer-checkout">
+        PROCEED TO CHECKOUT
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Basic Drawer JS logic
+  document.addEventListener('DOMContentLoaded', () => {
+    const drawer = document.getElementById('CartDrawer');
+    const overlay = document.getElementById('CartDrawerOverlay');
+    const closeBtn = document.getElementById('CartDrawerClose');
+    
+    // Attempt to hijack the header cart link if it exists
+    const cartLinks = document.querySelectorAll('a[href="{{ routes.cart_url }}"]');
+    
+    const openDrawer = (e) => {
+      if(e) e.preventDefault();
+      drawer.classList.add('is-active');
+      overlay.classList.add('is-active');
+      document.body.style.overflow = 'hidden';
+    };
+    
+    const closeDrawer = () => {
+      drawer.classList.remove('is-active');
+      overlay.classList.remove('is-active');
+      document.body.style.overflow = '';
+    };
+
+    cartLinks.forEach(link => {
+      link.addEventListener('click', openDrawer);
+    });
+    
+    if(closeBtn) closeBtn.addEventListener('click', closeDrawer);
+    if(overlay) overlay.addEventListener('click', closeDrawer);
+  });
+</script>

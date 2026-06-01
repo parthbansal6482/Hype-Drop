@@ -1,0 +1,1 @@
+/Users/parthbansal/Projects/shopify_website/AGENTS.md

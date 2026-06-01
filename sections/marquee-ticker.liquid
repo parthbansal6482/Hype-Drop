@@ -1,0 +1,122 @@
+{% style %}
+  .marquee-section--{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+    padding: {{ section.settings.padding_y }}px 0;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    white-space: nowrap;
+    border-top: 1px solid var(--color-foreground);
+    border-bottom: 1px solid var(--color-foreground);
+  }
+
+  .marquee-content {
+    display: flex;
+    flex-shrink: 0;
+    min-width: 100%;
+    animation: marquee-scroll {{ section.settings.speed }}s linear infinite;
+  }
+
+  /* When hover is allowed, pause the animation */
+  .marquee-section--{{ section.id }}:hover .marquee-content {
+    animation-play-state: paused;
+  }
+
+  .marquee-text {
+    font-size: {{ section.settings.font_size }}px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 0 2rem;
+    letter-spacing: 0.05em;
+  }
+
+  @keyframes marquee-scroll {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-100%, 0, 0);
+    }
+  }
+{% endstyle %}
+
+<div class="marquee-section--{{ section.id }}">
+  {%- assign text = section.settings.marquee_text | default: "LIMITED EDITION DROP // NEW COLLECTION LIVE" -%}
+  
+  <div class="marquee-content" aria-hidden="true">
+    <span class="marquee-text">{{ text }}</span>
+    <span class="marquee-text">{{ text }}</span>
+    <span class="marquee-text">{{ text }}</span>
+    <span class="marquee-text">{{ text }}</span>
+  </div>
+  
+  <div class="marquee-content" aria-hidden="true">
+    <span class="marquee-text">{{ text }}</span>
+    <span class="marquee-text">{{ text }}</span>
+    <span class="marquee-text">{{ text }}</span>
+    <span class="marquee-text">{{ text }}</span>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Marquee Ticker",
+  "settings": [
+    {
+      "type": "text",
+      "id": "marquee_text",
+      "label": "Marquee Text",
+      "default": "LIMITED EDITION DROP // NEW COLLECTION LIVE"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#00FF66"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#08080C"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "s",
+      "label": "Scrolling Speed",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_y",
+      "min": 5,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Vertical Padding",
+      "default": 15
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquee Ticker",
+      "category": "Promotional"
+    }
+  ]
+}
+{% endschema %}

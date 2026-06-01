@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "marquee": {
+      "type": "marquee-ticker",
+      "settings": {}
+    },
+    "hero": {
+      "type": "hype-video-hero",
+      "settings": {}
+    },
+    "collection": {
+      "type": "product-drop-grid",
+      "settings": {}
+    }
+  },
+  "order": [
+    "marquee",
+    "hero",
+    "collection"
+  ]
+}
