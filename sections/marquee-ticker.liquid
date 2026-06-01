@@ -42,7 +42,7 @@
 {% endstyle %}
 
 <div class="marquee-section--{{ section.id }}">
-  {%- assign text = section.settings.marquee_text | default: "LIMITED EDITION DROP // NEW COLLECTION LIVE" -%}
+  {%- assign text = section.settings.marquee_text | default: "MAISON HYPE DROP // FALL WINTER 2026 COLLECTION" -%}
   
   <div class="marquee-content" aria-hidden="true">
     <span class="marquee-text">{{ text }}</span>
@@ -67,19 +67,19 @@
       "type": "text",
       "id": "marquee_text",
       "label": "Marquee Text",
-      "default": "LIMITED EDITION DROP // NEW COLLECTION LIVE"
+      "default": "MAISON HYPE DROP // FALL WINTER 2026 COLLECTION"
     },
     {
       "type": "color",
       "id": "background_color",
       "label": "Background Color",
-      "default": "#00FF66"
+      "default": "#000000"
     },
     {
       "type": "color",
       "id": "text_color",
       "label": "Text Color",
-      "default": "#08080C"
+      "default": "#FFFFFF"
     },
     {
       "type": "range",
@@ -89,7 +89,7 @@
       "step": 1,
       "unit": "s",
       "label": "Scrolling Speed",
-      "default": 10
+      "default": 20
     },
     {
       "type": "range",

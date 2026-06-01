@@ -46,31 +46,31 @@
 
   .hero-heading {
     font-size: clamp(2.5rem, 5vw, 5rem);
-    font-weight: 900;
+    font-weight: 300;
     text-transform: uppercase;
+    letter-spacing: 0.05em;
     line-height: 1.1;
     margin-bottom: 1.5rem;
     color: #FFFFFF;
-    text-shadow: 0 4px 12px rgba(0,0,0,0.5);
   }
 
   .hero-cta {
     display: inline-block;
     padding: 1rem 3rem;
-    font-size: 1.125rem;
-    font-weight: bold;
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    background-color: var(--color-accent-neon);
-    color: #08080C;
+    background-color: transparent;
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
     border-radius: var(--style-border-radius-buttons);
-    transition: transform var(--transition-duration) var(--transition-curve),
-                background-color var(--transition-duration) var(--transition-curve);
+    transition: background-color var(--transition-duration) var(--transition-curve),
+                color var(--transition-duration) var(--transition-curve);
   }
 
   .hero-cta:hover {
-    transform: scale(1.05);
-    background-color: var(--color-accent-pink);
-    color: #FFFFFF;
+    background-color: #FFFFFF;
+    color: #000000;
   }
 {% endstyle %}
 

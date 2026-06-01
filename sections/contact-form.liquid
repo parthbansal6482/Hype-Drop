@@ -1,0 +1,132 @@
+{% style %}
+  .contact-section {
+    padding: 6rem 0;
+    background-color: #FFFFFF;
+  }
+
+  .contact-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .contact-header {
+    margin-bottom: 4rem;
+  }
+
+  .contact-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .contact-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-label {
+    font-size: 0.85rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #000000;
+    padding: 0.75rem 0;
+    font-size: 1rem;
+    color: #000000;
+    outline: none;
+    transition: border-bottom-width 0.2s ease, border-color 0.2s ease;
+  }
+
+  .form-input:focus {
+    border-bottom: 2px solid #000000;
+  }
+  
+  .form-input::placeholder {
+    color: #A0A0A0;
+    font-weight: 300;
+  }
+
+  .form-submit-btn {
+    padding: 1.5rem;
+    background-color: #000000;
+    color: #FFFFFF;
+    font-weight: 900;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid #000000;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-top: 1rem;
+  }
+
+  .form-submit-btn:hover {
+    background-color: #FFFFFF;
+    color: #000000;
+  }
+{% endstyle %}
+
+<div class="contact-section full-width">
+  <div class="contact-container">
+    <div class="contact-header">
+      <h1 class="contact-title">{{ page.title | default: 'CONTACT US' }}</h1>
+    </div>
+
+    {%- form 'contact', id: 'ContactForm', class: 'contact-form-wrapper' -%}
+      {%- if form.posted_successfully? -%}
+        <div style="padding: 1.5rem; border: 1px solid #000000; text-align: center; font-weight: bold; text-transform: uppercase;">
+          Thanks for reaching out. We'll get back to you soon.
+        </div>
+      {%- elsif form.errors -%}
+        <div style="padding: 1.5rem; border: 1px solid #000000; color: #000000; font-weight: bold; text-transform: uppercase;">
+          Please adjust the following fields:
+          {{ form.errors | default_errors }}
+        </div>
+      {%- endif -%}
+
+      <div class="form-field">
+        <label class="form-label" for="ContactForm-name">NAME</label>
+        <input class="form-input" autocomplete="name" type="text" id="ContactForm-name" name="contact[Name]" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}" placeholder="Jane Doe">
+      </div>
+      
+      <div class="form-field">
+        <label class="form-label" for="ContactForm-email">EMAIL</label>
+        <input class="form-input" autocomplete="email" type="email" id="ContactForm-email" name="contact[email]" spellcheck="false" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" aria-required="true" required placeholder="jane@example.com">
+      </div>
+      
+      <div class="form-field">
+        <label class="form-label" for="ContactForm-body">MESSAGE</label>
+        <textarea class="form-input" rows="4" id="ContactForm-body" name="contact[Body]" required placeholder="How can we help?">{%- if form.body -%}{{ form.body }}{%- endif -%}</textarea>
+      </div>
+      
+      <button type="submit" class="form-submit-btn">SEND MESSAGE</button>
+    {%- endform -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Contact Form",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Contact Form"
+    }
+  ]
+}
+{% endschema %}

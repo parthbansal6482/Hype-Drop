@@ -17,7 +17,7 @@
       {
         "type": "font_picker",
         "id": "type_primary_font",
-        "default": "work_sans_n4",
+        "default": "inter_n4",
         "label": "t:general.primary"
       }
     ]
@@ -59,26 +59,26 @@
       {
         "type": "color",
         "id": "background_color",
-        "default": "#08080C",
+        "default": "#FFFFFF",
         "label": "t:labels.background"
       },
       {
         "type": "color",
         "id": "foreground_color",
-        "default": "#FFFFFF",
+        "default": "#000000",
         "label": "t:labels.foreground"
       },
       {
         "type": "color",
-        "id": "accent_neon",
-        "default": "#00FF66",
-        "label": "Neon Volt Accent"
+        "id": "accent_gray",
+        "default": "#E5E5E5",
+        "label": "Accent Gray (Borders)"
       },
       {
         "type": "color",
-        "id": "accent_pink",
-        "default": "#FF0055",
-        "label": "Vivid Pink Accent"
+        "id": "color_secondary",
+        "default": "#111111",
+        "label": "Secondary Dark"
       },
       {
         "type": "range",

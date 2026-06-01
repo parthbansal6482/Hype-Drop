@@ -2,34 +2,35 @@
   .product-split-screen {
     display: flex;
     flex-wrap: wrap;
-    background-color: var(--color-background);
+    background-color: #FFFFFF;
+    border-top: 1px solid #000000;
   }
 
   .product-gallery {
     width: 50%;
     position: relative;
+    border-right: 1px solid #000000;
   }
 
   .product-gallery-images {
     display: flex;
     flex-direction: column;
-    gap: 1px;
-    background-color: var(--color-foreground);
-    border-right: 1px solid var(--color-foreground);
   }
 
   .product-image-container {
-    background-color: var(--color-background);
     width: 100%;
-    aspect-ratio: 4 / 5;
     position: relative;
     overflow: hidden;
   }
 
+  .product-image-container:not(:last-child) {
+    border-bottom: 1px solid #000000;
+  }
+
   .product-image-container img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
+    display: block;
   }
 
   .product-details-panel {
@@ -38,24 +39,24 @@
     top: 0;
     height: 100vh;
     overflow-y: auto;
-    padding: 4rem;
+    padding: 3rem;
     display: flex;
     flex-direction: column;
   }
 
   .product-title {
-    font-size: clamp(2rem, 4vw, 4rem);
+    font-size: 2rem;
     font-weight: 900;
     text-transform: uppercase;
-    margin: 0 0 1rem;
+    margin: 0 0 0.5rem;
     line-height: 1.1;
+    letter-spacing: -0.02em;
   }
 
   .product-price {
-    font-size: 1.5rem;
-    color: var(--color-accent-neon);
-    font-weight: bold;
-    margin-bottom: 3rem;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
   }
 
   .product-form-group {
@@ -63,102 +64,139 @@
   }
 
   .product-option-title {
-    font-weight: bold;
+    font-weight: 900;
     text-transform: uppercase;
     margin-bottom: 1rem;
     display: block;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
   }
 
-  /* Rigid Sizing Matrix */
   .sizing-matrix {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
   }
 
   .size-btn {
-    background: transparent;
-    border: 1px solid var(--color-foreground);
-    color: var(--color-foreground);
-    padding: 1rem;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    color: #000000;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight: 900;
     cursor: pointer;
-    transition: all var(--transition-duration) var(--transition-curve);
-    border-radius: var(--style-border-radius-inputs);
+    margin-right: -1px; /* collapse borders */
+    margin-bottom: -1px;
+    position: relative;
+    transition: all 0.3s ease;
   }
 
   .size-btn:hover:not(:disabled) {
-    border-color: var(--color-accent-neon);
-    color: var(--color-accent-neon);
+    background: #000000;
+    color: #FFFFFF;
+    z-index: 2;
   }
 
   .size-btn.is-active {
-    background: var(--color-accent-neon);
-    color: #08080C;
-    border-color: var(--color-accent-neon);
+    background: #000000;
+    color: #FFFFFF;
+    z-index: 2;
   }
 
   .size-btn:disabled {
-    opacity: 0.3;
+    color: #A0A0A0;
     cursor: not-allowed;
-    text-decoration: line-through;
+    background: #F5F5F5;
   }
 
-  /* Size Guide Drawer */
-  .size-guide-toggle {
-    background: none;
-    border: none;
-    color: var(--color-foreground);
-    text-decoration: underline;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    cursor: pointer;
-    padding: 0;
-    margin-top: 1rem;
-    transition: color var(--transition-duration) var(--transition-curve);
-  }
-
-  .size-guide-toggle:hover {
-    color: var(--color-accent-neon);
-  }
-
-  .size-guide-drawer {
-    display: none;
-    margin-top: 1rem;
-    padding: 1.5rem;
-    border: 1px solid var(--color-foreground);
-    background: #111;
-  }
-
-  .size-guide-drawer.is-active {
-    display: block;
+  /* Diagonal cross out for unavailable sizes */
+  .size-btn:disabled::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top left, transparent 48%, #000 49%, #000 51%, transparent 52%);
+    pointer-events: none;
   }
 
   .add-to-cart-btn {
     width: 100%;
     padding: 1.5rem;
-    background-color: var(--color-accent-neon);
-    color: #08080C;
+    background-color: #000000;
+    color: #FFFFFF;
     font-weight: 900;
-    font-size: 1.25rem;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    border: none;
-    border-radius: var(--style-border-radius-buttons);
+    border: 1px solid #000000;
     cursor: pointer;
-    transition: background-color var(--transition-duration) var(--transition-curve),
-                transform var(--transition-duration) var(--transition-curve);
-    margin-top: 2rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
   }
 
   .add-to-cart-btn:hover {
-    background-color: var(--color-accent-pink);
-    color: #FFF;
+    background-color: #FFFFFF;
+    color: #000000;
+  }
+
+  /* Flat border-bottom accordion */
+  .details-accordion {
+    border-top: 1px solid #000000;
+  }
+
+  .accordion-item {
+    border-bottom: 1px solid #000000;
+  }
+
+  .accordion-title {
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    padding: 1.5rem 0;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .accordion-title::after {
+    content: '+';
+    font-size: 1.25rem;
+    font-weight: 300;
+  }
+
+  .accordion-item.is-open .accordion-title::after {
+    content: '−';
+  }
+
+  .accordion-content {
+    display: none;
+    padding-bottom: 1.5rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .accordion-item.is-open .accordion-content {
+    display: block;
   }
 
   @media screen and (max-width: 900px) {
     .product-gallery, .product-details-panel {
       width: 100%;
+      border-right: none;
     }
     .product-details-panel {
       position: relative;
@@ -213,39 +251,6 @@
                 </button>
               {% endfor %}
             </div>
-            
-            {% if option.name == 'Size' or option.name == 'size' %}
-              <button type="button" class="size-guide-toggle" id="SizeGuideToggle">View Size Guide</button>
-              <div class="size-guide-drawer" id="SizeGuideDrawer">
-                <table style="width: 100%; border-collapse: collapse; text-align: left;">
-                  <tr style="border-bottom: 1px solid var(--color-foreground);">
-                    <th style="padding: 0.5rem 0;">Size</th>
-                    <th style="padding: 0.5rem 0;">Chest</th>
-                    <th style="padding: 0.5rem 0;">Length</th>
-                  </tr>
-                  <tr>
-                    <td style="padding: 0.5rem 0;">S</td>
-                    <td style="padding: 0.5rem 0;">38"</td>
-                    <td style="padding: 0.5rem 0;">28"</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 0.5rem 0;">M</td>
-                    <td style="padding: 0.5rem 0;">40"</td>
-                    <td style="padding: 0.5rem 0;">29"</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 0.5rem 0;">L</td>
-                    <td style="padding: 0.5rem 0;">42"</td>
-                    <td style="padding: 0.5rem 0;">30"</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 0.5rem 0;">XL</td>
-                    <td style="padding: 0.5rem 0;">44"</td>
-                    <td style="padding: 0.5rem 0;">31"</td>
-                  </tr>
-                </table>
-              </div>
-            {% endif %}
           </div>
         {% endfor %}
       {% endunless %}
@@ -258,25 +263,38 @@
         {% endif %}
       </button>
     {%- endform -%}
-    
-    <div class="product-description" style="margin-top: 3rem; line-height: 1.6;">
-      {{ product.description }}
+
+    <div class="details-accordion">
+      <div class="accordion-item">
+        <button type="button" class="accordion-title">Fabric & Care</button>
+        <div class="accordion-content">100% Heavyweight Cotton. Machine wash cold, hang dry. Do not iron directly on print. Made in Italy.</div>
+      </div>
+      <div class="accordion-item">
+        <button type="button" class="accordion-title">Shipping</button>
+        <div class="accordion-content">Orders process within 1-2 business days. Express shipping available at checkout. International duties apply.</div>
+      </div>
+      <div class="accordion-item">
+        <button type="button" class="accordion-title">Size Guide</button>
+        <div class="accordion-content">
+          <p>Model is 6'1" wearing size L.</p>
+          <p>Designed for an oversized, boxy fit. Take your normal size.</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // Size Guide Toggle
-    const sizeGuideToggle = document.getElementById('SizeGuideToggle');
-    const sizeGuideDrawer = document.getElementById('SizeGuideDrawer');
-    if(sizeGuideToggle && sizeGuideDrawer) {
-      sizeGuideToggle.addEventListener('click', () => {
-        sizeGuideDrawer.classList.toggle('is-active');
+    // Accordion Logic
+    const accordions = document.querySelectorAll('.accordion-title');
+    accordions.forEach(acc => {
+      acc.addEventListener('click', function() {
+        this.parentElement.classList.toggle('is-open');
       });
-    }
+    });
 
-    // Variant Selection Logic (Simplified)
+    // Variant Selection Logic
     const sizeBtns = document.querySelectorAll('.size-btn');
     const hiddenIdInput = document.getElementById('ProductVariantId');
     const productVariants = {{ product.variants | json }};
@@ -285,14 +303,10 @@
       btn.addEventListener('click', function() {
         if(this.disabled) return;
         
-        // Remove active from siblings
         const siblings = this.parentElement.querySelectorAll('.size-btn');
         siblings.forEach(s => s.classList.remove('is-active'));
-        
-        // Add active to clicked
         this.classList.add('is-active');
         
-        // Match variant ID based on selected value (assuming 1 option for simplicity in this aesthetic demo)
         const selectedValue = this.dataset.value;
         const matchedVariant = productVariants.find(v => v.option1 === selectedValue || v.option2 === selectedValue || v.option3 === selectedValue);
         

@@ -1,0 +1,252 @@
+{% style %}
+  .collection-layout {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #FFFFFF;
+    border-top: 1px solid #000000;
+  }
+
+  .collection-sidebar {
+    width: 250px;
+    border-right: 1px solid #000000;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    padding: 2rem;
+    overflow-y: auto;
+  }
+
+  .collection-filters-title {
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+  }
+
+  .filter-group {
+    margin-bottom: 2rem;
+  }
+
+  .filter-group-title {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .filter-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .filter-list li {
+    margin-bottom: 0.5rem;
+  }
+
+  .filter-list a {
+    color: #000000;
+    text-decoration: none;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    transition: opacity 0.3s ease;
+  }
+
+  .filter-list a:hover {
+    opacity: 0.5;
+  }
+
+  .collection-grid-container {
+    flex-grow: 1;
+    width: calc(100% - 250px);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    /* Strict CSS grid lines */
+    background-color: #000000;
+    gap: 1px;
+    border-bottom: 1px solid #000000;
+  }
+
+  .product-card {
+    background-color: #FFFFFF;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .product-card-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background-color: #FFFFFF;
+  }
+
+  .product-card-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.4s ease;
+  }
+
+  .product-card-image .img-primary {
+    opacity: 1;
+    z-index: 2;
+  }
+
+  .product-card-image .img-secondary {
+    opacity: 0;
+    z-index: 1;
+  }
+
+  .product-card:hover .product-card-image .img-primary {
+    opacity: 0;
+  }
+
+  .product-card:hover .product-card-image .img-secondary {
+    opacity: 1;
+  }
+
+  .quick-add-btn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #000000;
+    color: #FFFFFF;
+    border: none;
+    padding: 1rem;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 3;
+  }
+
+  .product-card:hover .quick-add-btn {
+    transform: translateY(0);
+  }
+
+  .product-card-details {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-top: 1px solid #000000;
+  }
+
+  .product-card-title {
+    font-size: 0.9rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin: 0 0 0.25rem 0;
+  }
+
+  .product-card-price {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  @media screen and (max-width: 900px) {
+    .collection-sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+      border-right: none;
+      border-bottom: 1px solid #000000;
+    }
+    .collection-grid-container {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<div class="collection-layout full-width">
+  <div class="collection-sidebar">
+    <div class="collection-filters-title">FILTER</div>
+    <div class="filter-group">
+      <div class="filter-group-title">CATEGORY</div>
+      <ul class="filter-list">
+        <li><a href="#">ALL</a></li>
+        <li><a href="#">OUTERWEAR</a></li>
+        <li><a href="#">TOPS</a></li>
+        <li><a href="#">BOTTOMS</a></li>
+        <li><a href="#">ACCESSORIES</a></li>
+      </ul>
+    </div>
+    <div class="filter-group">
+      <div class="filter-group-title">SIZE</div>
+      <ul class="filter-list">
+        <li><a href="#">S</a></li>
+        <li><a href="#">M</a></li>
+        <li><a href="#">L</a></li>
+        <li><a href="#">XL</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="collection-grid-container">
+    {% paginate collection.products by 12 %}
+      {% for product in collection.products %}
+        <a href="{{ product.url }}" class="product-card">
+          <div class="product-card-image">
+            {% if product.media.size > 0 %}
+              <img src="{{ product.media[0] | image_url: width: 600 }}" class="img-primary" alt="{{ product.title | escape }}" width="600" height="750" loading="lazy">
+              {% if product.media.size > 1 %}
+                <img src="{{ product.media[1] | image_url: width: 600 }}" class="img-secondary" alt="{{ product.title | escape }}" width="600" height="750" loading="lazy">
+              {% else %}
+                <img src="{{ product.media[0] | image_url: width: 600 }}" class="img-secondary" alt="{{ product.title | escape }}" width="600" height="750" loading="lazy">
+              {% endif %}
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg img-primary' }}
+              {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg img-secondary' }}
+            {% endif %}
+            
+            <button class="quick-add-btn" type="button" onclick="event.preventDefault(); alert('Quick add logic here');">QUICK ADD</button>
+          </div>
+          <div class="product-card-details">
+            <div class="product-card-meta">
+              <h3 class="product-card-title">{{ product.title }}</h3>
+            </div>
+            <div class="product-card-price">{{ product.price | money }}</div>
+          </div>
+        </a>
+      {% else %}
+        {% for i in (1..6) %}
+          <a href="#" class="product-card">
+            <div class="product-card-image">
+              {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg img-primary' }}
+              <button class="quick-add-btn" type="button">QUICK ADD</button>
+            </div>
+            <div class="product-card-details">
+              <div class="product-card-meta">
+                <h3 class="product-card-title">EXAMPLE PRODUCT</h3>
+              </div>
+              <div class="product-card-price">$120.00</div>
+            </div>
+          </a>
+        {% endfor %}
+      {% endfor %}
+    {% endpaginate %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Main Collection",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Main Collection"
+    }
+  ]
+}
+{% endschema %}

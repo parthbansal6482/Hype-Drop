@@ -13,8 +13,8 @@
     transition: transform var(--transition-duration) var(--transition-curve);
     display: flex;
     flex-direction: column;
-    border-left: 1px solid var(--color-foreground);
-    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    border-left: 1px solid var(--color-accent-gray);
+    box-shadow: -4px 0 24px rgba(0,0,0,0.05);
   }
 
   .cart-drawer.is-active {
@@ -48,7 +48,7 @@
   }
 
   .cart-drawer-close:hover {
-    color: var(--color-accent-pink);
+    opacity: 0.7;
   }
 
   .cart-drawer-body {
@@ -59,7 +59,7 @@
 
   .cart-drawer-footer {
     padding: 2rem;
-    border-top: 1px solid var(--color-foreground);
+    border-top: 1px solid var(--color-accent-gray);
     background-color: var(--color-background);
   }
 
@@ -74,7 +74,7 @@
   }
 
   .cart-drawer-subtotal span:last-child {
-    color: var(--color-accent-neon);
+    color: var(--color-foreground);
   }
 
   .cart-drawer-checkout {
@@ -82,20 +82,19 @@
     width: 100%;
     padding: 1.25rem;
     text-align: center;
-    background-color: transparent;
-    color: var(--color-accent-neon);
-    border: 2px solid var(--color-accent-neon);
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+    border: 1px solid var(--color-foreground);
     text-transform: uppercase;
-    font-weight: 900;
-    font-size: 1.2rem;
-    box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
+    font-weight: normal;
+    letter-spacing: 0.1em;
+    font-size: 1rem;
     transition: all var(--transition-duration) var(--transition-curve);
   }
 
   .cart-drawer-checkout:hover {
-    background-color: var(--color-accent-neon);
-    color: #08080C;
-    box-shadow: 0 0 20px rgba(0, 255, 102, 0.6);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
   }
   
   .cart-drawer-overlay {
@@ -126,11 +125,11 @@
   
   {% assign free_shipping_threshold = 50000 %}
   {% assign amount_left = free_shipping_threshold | minus: cart.total_price %}
-  <div class="cart-drawer-shipping-tracker" style="padding: 1rem 2rem; background: #111; border-bottom: 1px solid var(--color-foreground); text-align: center; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em;">
+  <div class="cart-drawer-shipping-tracker" style="padding: 1rem 2rem; background: var(--color-background); border-bottom: 1px solid var(--color-accent-gray); text-align: center; font-size: 0.85rem; font-weight: normal; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-secondary);">
     {% if amount_left > 0 %}
-      SPEND <span style="color: var(--color-accent-neon); text-shadow: 0 0 5px rgba(0, 255, 102, 0.4);">{{ amount_left | money }}</span> MORE TO UNLOCK FREE SHIPPING
+      SPEND <span style="color: var(--color-foreground); font-weight: bold;">{{ amount_left | money }}</span> MORE TO UNLOCK FREE SHIPPING
     {% else %}
-      <span style="color: var(--color-accent-neon); text-shadow: 0 0 5px rgba(0, 255, 102, 0.4);">CONGRATULATIONS! YOU'VE UNLOCKED FREE SHIPPING!</span>
+      <span style="color: var(--color-foreground); font-weight: bold;">YOU'VE UNLOCKED FREE SHIPPING</span>
     {% endif %}
   </div>
   
@@ -139,14 +138,14 @@
       {% for item in cart.items %}
         <!-- Item Markup -->
         <div style="margin-bottom: 1.5rem; display: flex; gap: 1rem;">
-          <div style="width: 80px; height: 100px; background: #222;">
+          <div style="width: 80px; height: 100px; background: var(--color-accent-gray);">
             {% if item.image %}
               <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}" style="width:100%; height:100%; object-fit:cover;">
             {% endif %}
           </div>
           <div>
-            <div style="font-weight: bold; text-transform: uppercase;">{{ item.product.title }}</div>
-            <div style="color: var(--color-accent-neon); margin-top: 0.5rem;">{{ item.final_line_price | money_with_currency }}</div>
+            <div style="font-weight: normal; letter-spacing: 0.05em; text-transform: uppercase;">{{ item.product.title }}</div>
+            <div style="color: var(--color-foreground); margin-top: 0.5rem;">{{ item.final_line_price | money_with_currency }}</div>
           </div>
         </div>
       {% endfor %}
