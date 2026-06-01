@@ -89,7 +89,7 @@
       <div class="review-card" {{ block.shopify_attributes }}>
         <div class="review-image">
           {% if block.settings.image %}
-            <img src="{{ block.settings.image | image_url: width: 600 }}" alt="Customer Fit Pic">
+            <img src="{{ block.settings.image | image_url: width: 600 }}" alt="Customer Fit Pic" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}" loading="lazy">
           {% else %}
             {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
           {% endif %}

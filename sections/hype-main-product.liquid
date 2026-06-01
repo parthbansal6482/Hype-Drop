@@ -1,0 +1,331 @@
+{% style %}
+  .product-split-screen {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #FFFFFF;
+    border-top: 1px solid #000000;
+  }
+
+  .product-gallery {
+    width: 50%;
+    position: relative;
+    border-right: 1px solid #000000;
+  }
+
+  .product-gallery-images {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-image-container {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-image-container:not(:last-child) {
+    border-bottom: 1px solid #000000;
+  }
+
+  .product-image-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .product-details-panel {
+    width: 50%;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-title {
+    font-size: 2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin: 0 0 0.5rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .product-price {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+  }
+
+  .product-form-group {
+    margin-bottom: 2rem;
+  }
+
+  .product-option-title {
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: block;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+
+  .sizing-matrix {
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+
+  .size-btn {
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    color: #000000;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    font-weight: 900;
+    cursor: pointer;
+    margin-right: -1px; /* collapse borders */
+    margin-bottom: -1px;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .size-btn:hover:not(:disabled) {
+    background: #000000;
+    color: #FFFFFF;
+    z-index: 2;
+  }
+
+  .size-btn.is-active {
+    background: #000000;
+    color: #FFFFFF;
+    z-index: 2;
+  }
+
+  .size-btn:disabled {
+    color: #A0A0A0;
+    cursor: not-allowed;
+    background: #F5F5F5;
+  }
+
+  /* Diagonal cross out for unavailable sizes */
+  .size-btn:disabled::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top left, transparent 48%, #000 49%, #000 51%, transparent 52%);
+    pointer-events: none;
+  }
+
+  .add-to-cart-btn {
+    width: 100%;
+    padding: 1.5rem;
+    background-color: #000000;
+    color: #FFFFFF;
+    font-weight: 900;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 1px solid #000000;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .add-to-cart-btn:hover {
+    background-color: #FFFFFF;
+    color: #000000;
+  }
+
+  /* Flat border-bottom accordion */
+  .details-accordion {
+    border-top: 1px solid #000000;
+  }
+
+  .accordion-item {
+    border-bottom: 1px solid #000000;
+  }
+
+  .accordion-title {
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    padding: 1.5rem 0;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .accordion-title::after {
+    content: '+';
+    font-size: 1.25rem;
+    font-weight: 300;
+  }
+
+  .accordion-item.is-open .accordion-title::after {
+    content: '−';
+  }
+
+  .accordion-content {
+    display: none;
+    padding-bottom: 1.5rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .accordion-item.is-open .accordion-content {
+    display: block;
+  }
+
+  @media screen and (max-width: 900px) {
+    .product-gallery, .product-details-panel {
+      width: 100%;
+      border-right: none;
+    }
+    .product-details-panel {
+      position: relative;
+      height: auto;
+      padding: 2rem;
+    }
+  }
+{% endstyle %}
+
+<div class="product-split-screen full-width">
+  <div class="product-gallery">
+    <div class="product-gallery-images">
+      {% for media in product.media %}
+        <div class="product-image-container">
+          {% if media.media_type == 'image' %}
+            <img src="{{ media | image_url: width: 1200 }}" alt="{{ media.alt | escape }}" width="{{ media.width }}" height="{{ media.height }}" loading="lazy">
+          {% else %}
+            {{ media | media_tag }}
+          {% endif %}
+        </div>
+      {% endfor %}
+      {% if product.media.size == 0 %}
+        <div class="product-image-container">
+           {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="product-details-panel">
+    <h1 class="product-title">{{ product.title }}</h1>
+    <div class="product-price">{{ product.price | money }}</div>
+
+    {%- form 'product', product -%}
+      <input type="hidden" name="id" id="ProductVariantId" value="{{ product.selected_or_first_available_variant.id }}">
+      
+      {% unless product.has_only_default_variant %}
+        {% for option in product.options_with_values %}
+          <div class="product-form-group">
+            <span class="product-option-title">{{ option.name }}</span>
+            <div class="sizing-matrix">
+              {% for value in option.values %}
+                {% assign is_available = false %}
+                {% assign option_index = option.position | minus: 1 %}
+                {% for variant in product.variants %}
+                  {% if variant.options[option_index] == value and variant.available %}
+                    {% assign is_available = true %}
+                  {% endif %}
+                {% endfor %}
+                <button type="button" class="size-btn {% if option.selected_value == value %}is-active{% endif %}" {% unless is_available %}disabled{% endunless %} data-value="{{ value | escape }}" data-option-index="{{ option.position }}">
+                  {{ value }}
+                </button>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      {% endunless %}
+
+      <button type="submit" name="add" class="add-to-cart-btn" {% unless product.available %}disabled{% endunless %}>
+        {% if product.available %}
+          ADD TO CART
+        {% else %}
+          SOLD OUT
+        {% endif %}
+      </button>
+    {%- endform -%}
+
+    <div class="details-accordion">
+      <div class="accordion-item">
+        <button type="button" class="accordion-title">Fabric & Care</button>
+        <div class="accordion-content">100% Heavyweight Cotton. Machine wash cold, hang dry. Do not iron directly on print. Made in Italy.</div>
+      </div>
+      <div class="accordion-item">
+        <button type="button" class="accordion-title">Shipping</button>
+        <div class="accordion-content">Orders process within 1-2 business days. Express shipping available at checkout. International duties apply.</div>
+      </div>
+      <div class="accordion-item">
+        <button type="button" class="accordion-title">Size Guide</button>
+        <div class="accordion-content">
+          <p>Model is 6'1" wearing size L.</p>
+          <p>Designed for an oversized, boxy fit. Take your normal size.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Accordion Logic
+    const accordions = document.querySelectorAll('.accordion-title');
+    accordions.forEach(acc => {
+      acc.addEventListener('click', function() {
+        this.parentElement.classList.toggle('is-open');
+      });
+    });
+
+    // Variant Selection Logic
+    const sizeBtns = document.querySelectorAll('.size-btn');
+    const hiddenIdInput = document.getElementById('ProductVariantId');
+    const productVariants = {{ product.variants | json }};
+    
+    sizeBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        if(this.disabled) return;
+        
+        const siblings = this.parentElement.querySelectorAll('.size-btn');
+        siblings.forEach(s => s.classList.remove('is-active'));
+        this.classList.add('is-active');
+        
+        const selectedValue = this.dataset.value;
+        const matchedVariant = productVariants.find(v => v.option1 === selectedValue || v.option2 === selectedValue || v.option3 === selectedValue);
+        
+        if (matchedVariant) {
+          hiddenIdInput.value = matchedVariant.id;
+        }
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Main Product",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Main Product"
+    }
+  ]
+}
+{% endschema %}
