@@ -155,18 +155,18 @@
     --letter-spacing-md: 0.13em;
 
     /* Font families */
-    --font-body--family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
-    --font-body--style: {{ settings.type_body_font.style }};
-    --font-body--weight: {{ settings.type_body_font.weight }};
-    --font-subheading--family: {{ settings.type_subheading_font.family }}, {{ settings.type_subheading_font.fallback_families }};
-    --font-subheading--style: {{ settings.type_subheading_font.style }};
-    --font-subheading--weight: {{ settings.type_subheading_font.weight }};
-    --font-heading--family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
-    --font-heading--style: {{ settings.type_heading_font.style }};
-    --font-heading--weight: {{ settings.type_heading_font.weight }};
-    --font-accent--family: {{ settings.type_accent_font.family }}, {{ settings.type_accent_font.fallback_families }};
-    --font-accent--style: {{ settings.type_accent_font.style }};
-    --font-accent--weight: {{ settings.type_accent_font.weight }};
+    --font-body--family: "Helvetica Neue", Inter, Arial, sans-serif;
+    --font-body--style: normal;
+    --font-body--weight: 400;
+    --font-subheading--family: "Helvetica Neue", Inter, Arial, sans-serif;
+    --font-subheading--style: normal;
+    --font-subheading--weight: 900;
+    --font-heading--family: "Helvetica Neue", Inter, Arial, sans-serif;
+    --font-heading--style: normal;
+    --font-heading--weight: 900;
+    --font-accent--family: "Helvetica Neue", Inter, Arial, sans-serif;
+    --font-accent--style: normal;
+    --font-accent--weight: 900;
 
     /* Margin sizes */
     --font-heading--spacing: 0.25em;
@@ -405,7 +405,7 @@
     --opacity-90: 0.9;
     --opacity-subdued-text: var(--opacity-70);
 
-    --shadow-button: 0 2px 3px rgb(0 0 0 / 20%);
+    --shadow-button: none;
     --gradient-image-overlay: linear-gradient(to top, rgb(0 0 0 / 0.5), transparent);
 
     /* Spacing */
@@ -456,19 +456,19 @@
 
     /* Borders */
     --style-border-width: 1px;
-    --style-border-radius-xs: 0.2rem;
-    --style-border-radius-sm: 0.6rem;
-    --style-border-radius-md: 0.8rem;
+    --style-border-radius-xs: 0px;
+    --style-border-radius-sm: 0px;
+    --style-border-radius-md: 0px;
     --style-border-radius-50: 50%;
-    --style-border-radius-lg: 1rem;
-    --style-border-radius-pills: {{ settings.pills_border_radius }}px;
-    --style-border-radius-inputs: {{ settings.inputs_border_radius }}px;
-    --style-border-radius-buttons-primary: {{ settings.button_border_radius_primary }}px;
-    --style-border-radius-buttons-secondary: {{ settings.button_border_radius_secondary }}px;
+    --style-border-radius-lg: 0px;
+    --style-border-radius-pills: 0px;
+    --style-border-radius-inputs: 0px;
+    --style-border-radius-buttons-primary: 0px;
+    --style-border-radius-buttons-secondary: 0px;
     --style-border-width-primary: {{ settings.primary_button_border_width }}px;
     --style-border-width-secondary: {{ settings.secondary_button_border_width }}px;
     --style-border-width-inputs: {{ settings.input_border_width }}px;
-    --style-border-radius-popover: {{ settings.popover_border_radius }}px;
+    --style-border-radius-popover: 0px;
     --style-border-popover: {{ settings.popover_border_width }}px {{ settings.popover_border }} rgb(var(--color-border-rgb) / {{ settings.popover_border_opacity }}%);
     --style-border-drawer: {{ settings.drawer_border_width }}px {{ settings.drawer_border }} rgb(var(--color-border-rgb) / {{ settings.drawer_border_opacity }}%);
     --style-border-swatch-opacity: {{ settings.variant_swatch_border_opacity }}%;
@@ -573,13 +573,13 @@
 
     /* Checkbox */
     --checkbox-size: 22px;
-    --checkbox-border-radius: 7px;
+    --checkbox-border-radius: 0px;
     --checkbox-border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55));
     --checkbox-label-padding: 8px;
 
     @media screen and (min-width: 750px) {
       --checkbox-size: 16px;
-      --checkbox-border-radius: 5px;
+      --checkbox-border-radius: 0px;
       --checkbox-label-padding: 6px;
     }
 
@@ -604,7 +604,7 @@
     --border-width-sm: 1px;
     --border-width-md: 2px;
     --border-width-lg: 5px;
-    --border-radius-sm: 0.25rem;
+    --border-radius-sm: 0px;
 
     /* Drawers */
     --drawer-inline-padding: 25px;

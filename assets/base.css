@@ -3595,7 +3595,7 @@ fly-to-cart.fly-to-cart--sticky {
   display: inline-flex;
   height: calc(var(--variant-picker-swatch-height) / 1.5);
   font-size: var(--font-size--xs);
-  border-radius: 20px;
+  border-radius: 0px;
   min-width: 20px;
   padding: 0 6px;
   background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
@@ -3611,11 +3611,10 @@ fly-to-cart.fly-to-cart--sticky {
 
 .top-shadow::before {
   content: '';
-  box-shadow: 0 0 10px var(--color-shadow);
+  border-top: var(--style-border-width) solid var(--color-border);
   position: absolute;
   z-index: var(--layer-lowest);
   inset: 0;
-  clip-path: inset(-50px 0 0 0); /* stylelint-disable-line */
 }
 
 @media screen and (min-width: 750px) {
@@ -3626,11 +3625,10 @@ fly-to-cart.fly-to-cart--sticky {
 
 .bottom-shadow::before {
   content: '';
-  box-shadow: 0 0 10px var(--color-shadow);
+  border-bottom: var(--style-border-width) solid var(--color-border);
   position: absolute;
   z-index: var(--layer-lowest);
   inset: 0;
-  clip-path: inset(0 0 -50px 0); /* stylelint-disable-line */
 }
 
 @media screen and (min-width: 750px) {
@@ -3928,7 +3926,7 @@ text-component {
 
 ::-webkit-scrollbar-thumb {
   background-color: rgb(var(--color-foreground-rgb) / var(--opacity-40));
-  border-radius: 20px;
+  border-radius: 0px;
   border: 6px solid transparent;
   background-clip: content-box;
   transition: background-color 0.2s;
@@ -4021,7 +4019,7 @@ text-component {
   aspect-ratio: 3 / 4;
   background-color: var(--color-foreground);
   opacity: var(--skeleton-opacity);
-  border-radius: 4px;
+  border-radius: 0px;
 }
 
 @media screen and (max-width: 749px) {
