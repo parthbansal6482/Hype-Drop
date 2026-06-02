@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-01T11:02:10Z",
+  "title": "Design System: Hype-Drop",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Matte Onyx",
+        "canonical": "oklch(15% 0 0)",
+        "tonalRamp": ["#000000", "#121212", "#242424", "#484848", "#888888", "#cccccc", "#eeeeee", "#ffffff"]
+      },
+      "neutral-bg": {
+        "role": "neutral",
+        "displayName": "Pure Canvas White",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": ["#000000", "#121212", "#242424", "#484848", "#888888", "#cccccc", "#eeeeee", "#ffffff"]
+      },
+      "accent-gray": {
+        "role": "neutral",
+        "displayName": "Technical Gray",
+        "canonical": "oklch(96% 0 0)",
+        "tonalRamp": ["#b2b2b2", "#c4c4c4", "#d6d6d6", "#e8e8e8", "#f3f3f3", "#f8f8f8", "#fafafa", "#ffffff"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display Text",
+        "purpose": "Hero headlines and main collection titles."
+      },
+      "body": {
+        "displayName": "Body Copy",
+        "purpose": "All reading text, product summaries, and details."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "ease-out-quint",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Smooth transition for interactive states and hover effects."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile",
+        "value": "750px"
+      },
+      {
+        "name": "desktop",
+        "value": "1200px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Standard call-to-action button with sharp corners and solid black fill.",
+      "html": "<button class=\"ds-btn-primary\">ADD TO CART</button>",
+      "css": ".ds-btn-primary { background: #121212; color: #ffffff; padding: 16px 48px; font-family: 'Helvetica Neue', Inter, sans-serif; font-size: 14px; font-weight: 900; letter-spacing: 0.05em; text-transform: uppercase; border: 1px solid #121212; border-radius: 0px; cursor: pointer; transition: background 0.3s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s cubic-bezier(0.22, 1, 0.36, 1); } .ds-btn-primary:hover { background: #ffffff; color: #121212; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Text input field with sharp corners and black border outline on active state.",
+      "html": "<input type=\"text\" class=\"ds-input\" placeholder=\"ENTER YOUR EMAIL\">",
+      "css": ".ds-input { background: #ffffff; color: #121212; padding: 14px 16px; font-family: 'Helvetica Neue', Inter, sans-serif; font-size: 14px; border: 1px solid #121212; border-radius: 0px; outline: none; width: 100%; box-sizing: border-box; transition: border-width 0.2s ease; } .ds-input:focus { border: 2px solid #121212; padding: 13px 15px; }"
+    },
+    {
+      "name": "Minimal Card",
+      "kind": "card",
+      "refersTo": "card-container",
+      "description": "Product display card with zero border radius and a flat background fill.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-card-img\"></div><div class=\"ds-card-info\"><h4 class=\"ds-card-title\">Oversized Heavyweight Hoodie</h4><p class=\"ds-card-price\">$180.00</p></div></div>",
+      "css": ".ds-card { background: #ffffff; border: 1px solid #121212; border-radius: 0px; overflow: hidden; display: flex; flex-direction: column; width: 280px; font-family: 'Helvetica Neue', Inter, sans-serif; } .ds-card-img { width: 100%; height: 350px; background: #f3f3f3; } .ds-card-info { padding: 16px; border-top: 1px solid #121212; } .ds-card-title { font-size: 14px; font-weight: 900; text-transform: uppercase; margin: 0 0 8px 0; letter-spacing: -0.01em; color: #121212; } .ds-card-price { font-size: 14px; margin: 0; color: #121212; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Swiss Editorial Monolith",
+    "overview": "The Hype-Drop design system is built on Swiss-style modernist typography and raw, uncompromising editorial restraint. The canvas relies entirely on contrast, typography, and precise spatial layout rather than decorative gradients, shadows, or rounded elements. It is clean, bold, cold, and highly confident—positioning the storefront as a high-end streetwear editorial catalog.",
+    "keyCharacteristics": [
+      "Pure Monochromatic Palette: Dominated by pure white (#FFFFFF) and solid black (#121212).",
+      "Zero Radii Geometry: Every input, button, card, image, and popup has a sharp 0px border-radius.",
+      "Flat Elevation: No drop-shadows are used. Surfaces are layered strictly through solid borders."
+    ],
+    "rules": [
+      {
+        "name": "The 10% Contrast Rule",
+        "body": "Saturated colors are entirely banned. Pure black must carry at least 90% of the text and active state fills. Gray is reserved strictly for minor containers and borders.",
+        "section": "colors"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "Shadows, blurs, and glassmorphism are strictly prohibited. Visual depth is established by solid black boundaries and flat background changes.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use exact 0px border-radius globally on every interface element.",
+      "Do use high typographic weight contrast (e.g. Extra Bold Display next to Light Body).",
+      "Do use solid black 1px borders to separate content blocks instead of shadows."
+    ],
+    "donts": [
+      "Don't use any rounded corners (e.g., border-radius greater than 0px).",
+      "Don't use drop-shadows or gradients on buttons, cards, images, or sections.",
+      "Don't use marketing buzzwords like 'unleash', 'supercharge', or 'leverage'."
+    ]
+  }
+}
